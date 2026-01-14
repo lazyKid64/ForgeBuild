@@ -1,0 +1,10 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+
+[rpc_endpoints]
+sepolia = "https://eth-sepolia.g.alchemy.com/v2/FrrRJ_WZfDz67rI1DaYfd"
+# CA = 0x79fB6856E7b25918419d3a3a56759351708FC358 

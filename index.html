@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ledger dApp</title>
+
+  <style>
+
+:root {
+  --mm-orange: #f6851b;
+  --mm-orange-dark: #e2761b;
+  --bg-main: #0f1115;
+  --bg-card: #16181d;
+  --bg-soft: #1c1f26;
+  --border-soft: #2a2e35;
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #1a1d23, #0f1115);
+  font-family: Inter, Arial, sans-serif;
+  color: var(--text-main);
+}
+
+.card {
+  max-width: 380px;
+  width: 100%;
+  margin: 80px auto;
+  background: var(--bg-card);
+  padding: 28px;
+  border-radius: 16px;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+}
+
+.title {
+  font-size: 25px;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+}
+
+.subtitle {
+  font-size: 13px;
+  margin-top: 4px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 12px;
+  font-size: 12px;
+  border-radius: 999px;
+  background: rgba(246, 133, 27, 0.15);
+  color: var(--mm-orange);
+  font-weight: 600;
+}
+
+.section {
+  margin-top: 26px;
+}
+
+.section h3 {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: var(--text-muted);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-soft);
+  color: var(--text-main);
+}
+
+button.primary {
+  background: linear-gradient(
+    135deg,
+    var(--mm-orange),
+    var(--mm-orange-dark)
+  );
+  color: black;
+  border: none;
+}
+
+button.primary:hover {
+  filter: brightness(1.05);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+input {
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-soft);
+  color: white;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+input::placeholder {
+  color: #6b7280;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--mm-orange);
+}
+
+.address {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #111318;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border-soft);
+  color: var(--text-muted);
+  word-break: break-all;
+}
+
+.stat {
+  background: #111318;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  border-left: 4px solid var(--mm-orange);
+}
+
+.status {
+  margin-top: 14px;
+  font-size: 13px;
+}
+
+.status.success {
+  color: #22c55e;
+}
+
+.status.loading {
+  color: var(--mm-orange);
+}
+
+.status.error {
+  color: #9ca3af;
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 30px;
+}
+
+.iit-badge {
+  margin-top: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  font-weight: 500;
+  display: inline-block;
+}
+
+@media (max-width: 480px) {
+  .card {
+    margin: 24px 14px;
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+
+  button {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  input {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .stat {
+    font-size: 13px;
+  }
+
+  .address {
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .card {
+    margin: 40px auto;
+    padding: 24px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card {
+    margin-top: 120px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <div class="title">Ledger dApp by Ishant</div>
+    <div class="subtitle">Track ETH deposits on-chain</div>
+    <div class="badge">Sepolia Testnet</div>
+
+    <div class="section">
+      <button id="connectBtn" class="primary">Connect Wallet</button>
+      <div id="account" class="address">Not connected</div>
+    </div>
+
+    <div class="section">
+      <h3 class="head">Balances</h3>
+      <button id="refreshBtn">Refresh</button>
+
+      <div class="stat">
+        Contract Balance:
+        <strong><span id="contractBalance">—</span></strong>
+      </div>
+
+      <div class="stat">
+        Your Deposited Balance:
+        <strong><span id="userBalance">—</span></strong>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="head">Deposit ETH</h3>
+      <input id="amount" type="text" placeholder="ETH amount"/>
+      <button id="depositBtn" class="primary">Deposit</button>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <div class="footer">
+  Built with Solidity · Foundry · Viem  
+  <br/>
+  <span class="iit-badge">
+    IIT Roorkee Blockchain Society
+  </span>
+</div>
+</div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
